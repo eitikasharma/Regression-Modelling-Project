@@ -1,4 +1,5 @@
 🏡 Chicago Housing Prices - Regression Modelling Project
+
 📌 Overview
 This project explores a regression-based approach to predict housing prices in Chicago using a dataset of 156 properties. It was completed as part of the MM916: Data Analytics in R course and focuses on selecting optimal predictors, transforming variables, and validating linear regression assumptions to build an accurate predictive model.
 
