@@ -1,0 +1,287 @@
+# Import Libraries
+library(tidyverse)
+library(ggplot2)
+library(GGally)
+library(ggfortify)
+library(car)
+library(rcompanion)
+library(leaps)
+library(MASS)
+library(corrplot)
+library(RColorBrewer)
+
+# Import Dataset
+RealEstate = read.csv("C:/Users/LENOVO/OneDrive - University of Strathclyde/Desktop/R Project 2/Real Estate.csv")
+view(RealEstate)
+str(RealEstate)
+
+# Data Exploration
+tail(RealEstate)
+summary(RealEstate)
+colnames(RealEstate)
+
+
+# Create Box Plot
+ggplot(stack(RealEstate), aes(x = ind, y = values)) +
+  geom_boxplot() +
+  labs(title = "Box Plot of Housing Variables",
+       x = "Variable",
+       y = "Value") +
+  theme_minimal() +
+  scale_y_continuous(expand = expansion(mult = c(0.05, 0.1)))
+ 
+ 
+#Correlation Heatmap 
+CorrelationMatrix <- cor(RealEstate)
+# Plot the correlation matrix using color
+corrplot(CorrelationMatrix, method = "color", col = brewer.pal(9, "YlOrRd"))
+
+
+# Check for Null values
+any(is.na(RealEstate))
+
+# Create Scatterplot Matrix
+ColumnsToInclude <- c("Price", "Bedroom", "Room", "Space", "Lot", "Tax", "Bathroom", "Garage", "Condition")
+ggpairs(RealEstate[, ColumnsToInclude])
+
+# Convert Condition column to a factor
+RealEstate$Condition <- as.factor(RealEstate$Condition)
+
+
+require(rcompanion)
+
+--------------------------------------------------------------------------------------
+
+# Histogram for original bedroom variable
+hist(RealEstate$Bedroom, col="lightblue")
+
+# Tukey transformation for Bedroom
+TransformedBedroom <- transformTukey(RealEstate$Bedroom)
+
+# Plot histogram for the transformed Bedroom variable
+hist(TransformedBedroom, col="lightblue")
+
+# QQ plot for the transformed Bedroom variable
+qqnorm(TransformedBedroom)
+
+# QQ plot for the original Bedroom variable
+qqnorm(RealEstate$Bedroom)
+
+# Fit linear model for original Bedroom variable
+LinearModelForBedroom <- lm(Price ~ Bedroom, data = RealEstate)
+summary(LinearModelForBedroom)
+
+# Fit linear model for transformed Bedroom variable
+LinearModelForTransformedBedroom <- lm(Price ~ TransformedBedroom, data = RealEstate)
+summary(LinearModelForTransformedBedroom)
+
+--------------------------------------------------------------------------------------
+
+# Histogram for original Space variable
+hist(RealEstate$Space, col="orange")
+
+# Tukey transformation for Space
+TransformedSpace <- transformTukey(RealEstate$Space)
+
+# Plot histogram for the transformed Space variable
+hist(TransformedSpace, col="orange")
+
+# QQ plot for the transformed Space variable
+qqnorm(TransformedSpace)
+
+# QQ plot for the original Space variable
+qqnorm(RealEstate$Space)
+
+# Fit linear model for original Space variable
+LinearModelForSpace <- lm(Price ~ Space, data = RealEstate)
+summary(LinearModelForSpace)
+
+# Fit linear model for transformed Space variable
+LinearModelForTransformedSpace <- lm(Price ~ TransformedSpace, data = RealEstate)
+summary(LinearModelForTransformedSpace)
+
+--------------------------------------------------------------------------------
+
+# Histogram for original Room variable
+hist(RealEstate$Room, col="lightgreen")
+
+# Tukey transformation for Room
+TransformedRoom <- transformTukey(RealEstate$Room)
+
+# Plot histogram for the transformed Room variable
+hist(TransformedRoom,col="lightgreen")
+
+# QQ plot for the transformed Room variable
+qqnorm(TransformedRoom)
+
+# QQ plot for the original Room variable
+qqnorm(RealEstate$Room)
+
+# Fit linear model for original Room variable
+LinearModelForRoom <- lm(Price ~ Room, data = RealEstate)
+summary(LinearModelForRoom)
+
+# Fit linear model for transformed Room variable
+LinearModelForTransformedRoom <- lm(Price ~ TransformedRoom, data = RealEstate)
+summary(LinearModelForTransformedRoom)
+
+---------------------------------------------------------------------------------
+
+# Histogram for original Tax variable
+hist(RealEstate$Tax,col="lightpink")
+
+# Tukey transformation for Tax
+TransformedTax <- transformTukey(RealEstate$Tax)
+
+# Plot histogram for the transformed Tax variable
+hist(TransformedTax,col="lightpink")
+
+# QQ plot for the transformed Tax variable
+qqnorm(TransformedTax)
+
+# QQ plot for the original Tax variable
+qqnorm(RealEstate$Tax)
+
+# Fit linear model for original Tax variable
+LinearModelForTax <- lm(Price ~ Tax, data = RealEstate)
+summary(LinearModelForTax)
+
+# Fit linear model for transformed Tax variable
+LinearModelForTransformTax <- lm(Price ~ TransformedTax, data = RealEstate)
+summary(LinearModelForTransformTax)
+
+--------------------------------------------------------------------------------
+
+# Histogram for original Bathroom variable
+hist(RealEstate$Bathroom,col="red")
+
+# Tukey transformation for Bathroom
+TransformedBathroom <- transformTukey(RealEstate$Bathroom)
+
+# Plot histogram for the transformed Bathroom variable
+hist(TransformedBathroom,col="red")
+
+# QQ plot for the transformed Bathroom variable
+qqnorm(TransformedBathroom)
+
+# QQ plot for the original Bathroom variable
+qqnorm(RealEstate$Bathroom)
+
+# Fit linear model for original Bathroom variable
+LinearModelForBathroom <- lm(Price ~ Bathroom, data = RealEstate)
+summary(LinearModelForBathroom)
+
+# Fit linear model for transformed Bathroom variable
+LinearModelForTransformBathroom <- lm(Price ~ TransformedBathroom, data = RealEstate)
+summary(LinearModelForTransformBathroom)
+
+--------------------------------------------------------------------------------
+# Histogram for original Garage variable
+hist(RealEstate$Garage,col="brown")
+
+# Tukey transformation for Garage
+TransformedGarage <- transformTukey(RealEstate$Garage)
+
+# Plot histogram for the transformed Garage variable
+hist(TransformedGarage,col="brown")
+
+# QQ plot for the transformed Garage variable
+qqnorm(TransformedGarage)
+
+# QQ plot for the original Garage variable
+qqnorm(RealEstate$Garage)
+
+# Fit linear model for original Garage variable
+LinearModelForGarage <- lm(Price ~ Garage, data = RealEstate)
+summary(LinearModelForGarage)
+
+# Fit linear model for transformed Garage variable
+LinearModelForTransformGarage <- lm(Price ~ TransformedGarage, data = RealEstate)
+summary(LinearModelForTransformGarage)
+
+-------------------------------------------------------------------------------
+
+# Histogram for original Lot variable
+hist(RealEstate$Lot,col="grey")
+
+# Tukey transformation for Lot
+TransformedLot <- transformTukey(RealEstate$Lot)
+
+# Plot histogram for the transformed Lot variable
+hist(TransformedLot,col="grey")
+
+# QQ plot for the transformed Lot variable
+qqnorm(TransformedLot)
+
+# QQ plot for the original Lot variable
+qqnorm(RealEstate$Lot)
+
+# Fit linear model for original Lot variable
+LinearModelForLot<- lm(Price ~ Lot, data = RealEstate)
+summary(LinearModelForLot)
+
+# Fit linear model for transformed Lot variable
+LinearModelForTransformedLot <- lm(Price ~ TransformedLot, data = RealEstate)
+summary(LinearModelForTransformedLot)
+
+----------------------------------------------------------------------------------
+
+# Checking and dealing with multicollinearity
+LinearModelOverall <- lm(Price ~ Bedroom + Space + Room + Lot + Tax + Garage + Condition, data = RealEstate)
+
+LinearModelTransformedOverall <- lm(Price ~ TransformedSpace + Room + TransformedLot + TransformedTax + Garage + TransformedBathroom + Condition, data = RealEstate)
+
+# Check VIF for multicollinearity
+VIF <- car::vif(LinearModelOverall)
+TransformedVIF<- car::vif(LinearModelTransformedOverall)
+
+# Print VIF values
+print("VIF for Original Variables:")
+print(VIF)
+
+print("VIF for Transformed Variables:")
+print(TransformedVIF)
+
+-----------------------------------------------------------------------------------
+
+# Create a base model
+LinearModelForBase <- lm(Price ~ 1, data = RealEstate)
+
+# Perform stepwise regression
+LinearModelStepwise <- step(LinearModelForBase, direction = 'both', 
+                    scope = ~ Bedroom * Condition + TransformedSpace * Condition +TransformedLot * Condition +                       TransformedTax * Condition +Garage * Condition + TransformedBathroom * Condition, 
+                    data = RealEstate)
+
+# Display the summary of the selected model
+summary(LinearModelStepwise)
+
+-------------------------------------------------------------------------------------
+
+# AIC 608.67
+LinearModelForModel1 <- lm(Price ~ TransformedSpace + TransformedTax + Garage + TransformedBathroom + TransformedLot + Condition, data = RealEstate)
+summary(LinearModelForModel1)
+
+# Perform stepwise regression for model selection
+LinearModelStepwise <- step(LinearModelForBase, direction = 'both', 
+                       scope = ~ Bedroom*Condition + TransformedSpace*Condition +
+                         TransformedLot*Condition + TransformedTax*Condition +
+                         Garage*Condition + TransformedBathroom*Condition,
+                       data = RealEstate)
+
+# AIC 575.34
+LinearModelForModel2 <- lm(Price ~ TransformedSpace + TransformedTax + Garage + TransformedBathroom + TransformedLot + Condition + TransformedBathroom:Condition + TransformedLot:Condition, data = RealEstate)
+summary(LinearModelForModel2)
+
+# Calculate AIC, anova for the new model
+AIC(LinearModelForModel1,LinearModelForModel2)
+anova(LinearModelForModel1,LinearModelForModel2)
+
+
+# Visualize the model using autoplot
+autoplot(LinearModelForModel1)
+autoplot(LinearModelForModel2)
+
+
+# Mathematical Equation
+Price = 93.06 + (5024*TransformedSpace) + (2385*TransformedTax) + 69.24 + (00*Garage) + (137.8*TransformedBathroom) - (14040*TransformedLot) - (1187*Condition) + (1165*TransformedBathroom:Condition) - (33050*TransformedLot:Condition)
+
